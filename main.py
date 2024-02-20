@@ -34,6 +34,7 @@ for df in dataframes:
 
     print(f'Getting PlayTracker IDs for {csv_files[i]}')
     logging.info(f'Getting PlayTracker IDs for {csv_files[i]}')
+    
     for id in df['ID']:
         url = 'https://steamdb.info/app/' + str(id)
         

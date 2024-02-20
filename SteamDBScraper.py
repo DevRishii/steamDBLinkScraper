@@ -109,10 +109,11 @@ class Scraper:
     Get the PlayTracker ID of a game
     '''
     def get_pt_id(self, url):
+        time.sleep(1.5)
         self.driver.get(url)
         
         try:
-            WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, 'tab-charts')))
+            WebDriverWait(self.driver, 15).until(EC.presence_of_element_located((By.ID, 'tab-charts')))
             self.driver.find_element(By.ID, 'tab-charts').click()
             pt_link = self.driver.find_element(By.CSS_SELECTOR, '#charts > div.row.row-app-charts > div:nth-child(3) > ul > li:nth-child(4) > a').get_attribute('href')
             return pt_link.split('/')[-1].rstrip('?utm_source=SteamDB')
@@ -126,7 +127,7 @@ class Scraper:
                 return pt_link.split('/')[-1].rstrip('?utm_source=SteamDB')
             except:
                 logging.error('Could not find the PlayTracker ID for ' + url)
-                print('Could not find the PlayTracker ID for ' + url)
+                #print('Could not find the PlayTracker ID for ' + url)
                 return None
 
         
