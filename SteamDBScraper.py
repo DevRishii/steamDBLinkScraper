@@ -15,7 +15,7 @@ class Scraper:
     def __init__(self, url):
         self.url = 'https://steamdb.info/search/?a=app&q=&type=1&category=2'
         chrome_options = webdriver.ChromeOptions()
-        #chrome_options.add_argument("--headless")
+        chrome_options.add_argument("--headless")
         chrome_options.add_argument("--window-size=2560,1440")
         chrome_options.add_argument("--disable-gpu")
         
