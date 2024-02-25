@@ -115,21 +115,19 @@ class Scraper:
         try:
             WebDriverWait(self.driver, 15).until(EC.presence_of_element_located((By.ID, 'tab-charts')))
             self.driver.find_element(By.ID, 'tab-charts').click()
-            pt_link = self.driver.find_element(By.CSS_SELECTOR, '#charts > div.row.row-app-charts > div:nth-child(3) > ul > li:nth-child(4) > a').get_attribute('href')
+            pt_link = self.driver.find_elements(By.CLASS_NAME, 'app-chart-numbers')[-1]
+            pt_link = [link.get_attribute('href') for link in pt_link.find_elements(By.TAG_NAME, 'a') if 'playtracker' in link.get_attribute('href')][0]
             return pt_link.split('/')[-1].rstrip('?utm_source=SteamDB')
-            
         except:
-            time.sleep(2.5)
-            try:
-                WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, 'tab-charts')))
-                self.driver.find_element(By.ID, 'tab-charts').click()
-                pt_link = self.driver.find_element(By.CSS_SELECTOR, '#charts > div.row.row-app-charts > div:nth-child(3) > ul > li:nth-child(4) > a').get_attribute('href')
-                return pt_link.split('/')[-1].rstrip('?utm_source=SteamDB')
-            except:
-                logging.error('Could not find the PlayTracker ID for ' + url)
-                #print('Could not find the PlayTracker ID for ' + url)
-                return None
+            logging.error('Could not find the PlayTracker ID for ' + url)
+            #print('Could not find the PlayTracker ID for ' + url)
+            return None
+        
 
-        
-        
-        
+    '''
+    Save a dataframe to a CSV file
+    '''
+    def saveToCSV(self, df, path):
+        df.to_csv(path, index=False)
+        logging.info('Dataframe saved to ' + path)
+        print('Dataframe saved to ' + path)

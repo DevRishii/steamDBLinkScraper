@@ -41,18 +41,16 @@ for df in dataframes:
         pt_ids.append(scraper.get_pt_id(url))
         count += 1
         
-        if count % 20 == 0:
-            print(f'Total saved games: {count} games')
-            print('pt_ids:',pt_ids)
         
         if count % 1000 == 0:
             logging.info(f'Total saved games: {count} games')
+            scraper.saveToCSV(df, f'./saved-info/{csv_files[i]}')
         
     df['PlayTrackerID'] = pt_ids
     
     
     print(f'Saving info to ./saved-info/{csv_files[i]}.csv')
-    logging.info(f'Saving info to ./saved-info/{csv_files[i]}.csv')
-    scraper.saveToCSV(df, f'./saved-info/{csv_files[i]}.csv')
+    logging.info(f'Saving info to ./saved-info/{csv_files[i]}')
+    scraper.saveToCSV(df, f'./saved-info/{csv_files[i]}')
     
     i += 1
