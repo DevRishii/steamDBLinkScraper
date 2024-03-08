@@ -54,3 +54,6 @@ for df in dataframes:
     scraper.saveToCSV(df, f'./saved-info/{csv_files[i]}')
     
     i += 1
+
+
+

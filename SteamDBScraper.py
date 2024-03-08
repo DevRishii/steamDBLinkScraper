@@ -121,7 +121,7 @@ class Scraper:
         except:
             logging.error('Could not find the PlayTracker ID for ' + url)
             #print('Could not find the PlayTracker ID for ' + url)
-            return None
+            return "None"
         
 
     '''
