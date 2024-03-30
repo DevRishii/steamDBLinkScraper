@@ -16,11 +16,11 @@ class Scraper:
     def __init__(self, url):
         self.url = 'https://steamdb.info/search/?a=app&q=&type=1&category=2'
         chrome_options = webdriver.ChromeOptions()
-        # chrome_options.add_argument("--headless")
+        chrome_options.add_argument("--headless")
         chrome_options.add_argument("--window-size=2560,1440")
         chrome_options.add_argument("--disable-gpu")
         
-        # Using Dylan's user agent
+        # Using Rishi's user agent
         chrome_options.add_argument('--user-agent=SteamDB-Educational-Access; patel.4091@osu.edu')
 
         self.driver = webdriver.Chrome(options=chrome_options)
@@ -121,10 +121,10 @@ class Scraper:
             return pt_link.split('/')[-1].rstrip('?utm_source=SteamDB')
         
         except NoSuchElementException as e: #NoSuchElementException
-            logging.error('Could not find the PlayTracker ID for ' + url, "error: ", e)
+            logging.error('Could not find the PlayTracker ID for ' + url, "error: ", str(e).split('(Session')[0].strip())
             return "None"
         except TimeoutException as e: #TimeoutException
-            logging.error('Timed out while looking for the PlayTracker ID for ' + url, "error: ", e)
+            logging.error('Timed out while looking for the PlayTracker ID for ' + url, "error: TimeoutException")
             return "None"
         except Exception as e: #Any other exceptions
             logging.error('An error occurred while looking for the PlayTracker ID for ' + url, "error: ", e)
@@ -138,3 +138,13 @@ class Scraper:
         df.to_csv(path, index=False)
         logging.info('Dataframe saved to ' + path)
         print('Dataframe saved to ' + path)
+        
+    '''
+    Purposely creates a NoSuchElementException to test the error handling
+    '''
+    def test_error(self):
+        try:
+            self.driver.find_element(By.ID, 'non-existent-element')
+        except Exception as e:
+            print(str(e).split('(Session')[0].strip())
+    

@@ -15,8 +15,8 @@ scraper: Scraper = Scraper('https://steamdb.info/search/?a=app&q=&type=1&categor
 
 folder_path = './csv-backup'
 
-# List all CSV files in the folder
-csv_files = [file for file in os.listdir(folder_path) if file.endswith('.csv')]
+# List all CSV files in the folder and sorts them in ascending order
+csv_files = sorted([file for file in os.listdir(folder_path) if file.endswith('.csv')])
 
 # Initialize an empty dictionary to store dataframes
 dataframes = {}
@@ -47,7 +47,6 @@ for df in dataframes:
         pt_ids.append(scraper.get_pt_id(url))
         
         count += 1
-        
         
         if count % 1000 == 0:
             logging.info(f'Total saved games: {count} games')
