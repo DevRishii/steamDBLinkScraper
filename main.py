@@ -36,9 +36,16 @@ for df in dataframes:
     logging.info(f'Getting PlayTracker IDs for {csv_files[i]}')
     
     for id in df['ID']:
-        url = 'https://steamdb.info/app/' + str(id)
+        
+        if isinstance(id, str):
+            # ex: "236450,246250,246251,246252,246253,246254,246255,246256,246257"
+            id = id.split(',')[0]
+            url = 'https://steamdb.info/app/' + id
+        else:
+            url = 'https://steamdb.info/app/' + str(id)
         
         pt_ids.append(scraper.get_pt_id(url))
+        
         count += 1
         
         
