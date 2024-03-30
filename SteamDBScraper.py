@@ -2,6 +2,7 @@ import selenium.webdriver as webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.common.exceptions import NoSuchElementException, TimeoutException
 import json
 import time
 import logging
@@ -118,9 +119,15 @@ class Scraper:
             pt_link = self.driver.find_elements(By.CLASS_NAME, 'app-chart-numbers')[-1]
             pt_link = [link.get_attribute('href') for link in pt_link.find_elements(By.TAG_NAME, 'a') if 'playtracker' in link.get_attribute('href')][0]
             return pt_link.split('/')[-1].rstrip('?utm_source=SteamDB')
-        except:
-            logging.error('Could not find the PlayTracker ID for ' + url)
-            #print('Could not find the PlayTracker ID for ' + url)
+        
+        except NoSuchElementException as e: #NoSuchElementException
+            logging.error('Could not find the PlayTracker ID for ' + url, "error: ", e)
+            return "None"
+        except TimeoutException as e: #TimeoutException
+            logging.error('Timed out while looking for the PlayTracker ID for ' + url, "error: ", e)
+            return "None"
+        except Exception as e: #Any other exceptions
+            logging.error('An error occurred while looking for the PlayTracker ID for ' + url, "error: ", e)
             return "None"
         
 
