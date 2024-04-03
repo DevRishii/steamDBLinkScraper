@@ -50,6 +50,7 @@ for df in dataframes:
         
         if count % 1000 == 0:
             logging.info(f'Total saved games: {count} games')
+            df['PlayTrackerID'] = pt_ids
             scraper.saveToCSV(df, f'./saved-info/{csv_files[i]}')
         
     df['PlayTrackerID'] = pt_ids
