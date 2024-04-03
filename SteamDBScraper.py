@@ -121,13 +121,13 @@ class Scraper:
             return pt_link.split('/')[-1].rstrip('?utm_source=SteamDB')
         
         except NoSuchElementException as e: #NoSuchElementException
-            logging.error('Could not find the PlayTracker ID for ' + url, "error: ", str(e).split('(Session')[0].strip())
+            logging.error('Could not find the PlayTracker ID for ', url, "error: ", str(e).split('(Session')[0].strip())
             return "None"
         except TimeoutException as e: #TimeoutException
-            logging.error('Timed out while looking for the PlayTracker ID for ' + url, "error: TimeoutException")
+            logging.error('Timed out while looking for the PlayTracker ID for ', url, "error: TimeoutException")
             return "None"
         except Exception as e: #Any other exceptions
-            logging.error('An error occurred while looking for the PlayTracker ID for ' + url, "error: ", e)
+            logging.error('An error occurred while looking for the PlayTracker ID for ', url, "error: ", str(e).split('(Session')[0].strip())
             return "None"
         
 
